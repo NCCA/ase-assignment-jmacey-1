@@ -6,6 +6,9 @@
 2. write tests for reader and writer both in C++ and python
 3. write a simple set of test data to use with the app and unit tests
 
-## Week 2
+TODO finish frame generation and testing
+Write out data for frames.
 
-1. write a simple OpenGL app to render the data
+
+
+

@@ -26,7 +26,7 @@ This data model is not going to be high performance, we can use a filter later t
 classDiagram
 
     class Frame{
-            # m_actualFrameTime : std::variant<int,float,double> 
-            # m_frameData : std::vector<std::vector<std::variant<int,float,double>>>
+            # m_actualFrameTime : std::variant&lt;&lt;int,float,double&gt;&gt;
+            # m_frameData : std::vector&lt;&ltstd::vector&lt;&lt;std::variant<<int,float,double&gt;&gt;&gt;&gt;
         }
 ```

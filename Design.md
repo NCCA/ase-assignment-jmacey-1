@@ -23,8 +23,10 @@ This give us quite a flexible design for storing anything, we can use the std::v
 This data model is not going to be high performance, we can use a filter later to build something more efficient (for opengl etc). This can be done by using a std::vector of explicit types later, and either moving the data to an SOA type format for easier OpenGL usage etc. 
 
 ```mermaid
-class Frame{
-        # m_actualFrameTime : std::variant<int,float,double> 
-        # m_frameData : std::vector<std::vector<std::variant<int,float,double>>>
-    }
+classDiagram
+
+    class Frame{
+            # m_actualFrameTime : std::variant<int,float,double> 
+            # m_frameData : std::vector<std::vector<std::variant<int,float,double>>>
+        }
 ```

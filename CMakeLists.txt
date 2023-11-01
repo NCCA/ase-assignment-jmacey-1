@@ -9,6 +9,16 @@ project(PointViz_build)
 set(CMAKE_CXX_STANDARD 17)
 find_package(fmt CONFIG REQUIRED)
 
+## Test Data Gen Programs
+set(GenDataName GenerateTestDataFiles)
+add_executable(${GenDataName} )
+target_include_directories(${GenDataName} PRIVATE include)
+target_sources(${GenDataName} PRIVATE
+        src/GenerateTestDataFiles.cpp
+        src/PointVizWriter.cpp
+        include/PointVizWriter.h
+)
+
 
 ### Testing Code
 find_package(GTest CONFIG REQUIRED)
@@ -25,3 +35,11 @@ target_sources(${TestName} PRIVATE
 )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main )
 gtest_discover_tests(${TestName})
+
+add_custom_target(${TestName}CopyTestFiles ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/files
+        ${PROJECT_BINARY_DIR}/files
+)
+
+ADD_DEPENDENCIES(${TestName} ${TestName}CopyTestFiles)

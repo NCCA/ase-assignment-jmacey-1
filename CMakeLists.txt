@@ -30,8 +30,12 @@ set(CMAKE_CXX_STANDARD 17)
 target_include_directories(${TestName} PRIVATE include)
 target_sources(${TestName} PRIVATE
         tests/PointVizWriterTests.cpp
+        tests/PointVizReaderTests.cpp
         src/PointVizWriter.cpp
         include/PointVizWriter.h
+        src/PointVizReader.cpp
+        include/PointVizReader.h
+
 )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main )
 gtest_discover_tests(${TestName})

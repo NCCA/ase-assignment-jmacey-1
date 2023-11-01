@@ -27,6 +27,6 @@ classDiagram
 
     class Frame{
             # m_actualFrameTime : std::variant&lt;&lt;int,float,double&gt;&gt;
-            # m_frameData : std::vector&lt;&ltstd::vector&lt;&lt;std::variant<<int,float,double&gt;&gt;&gt;&gt;
+            # m_frameData : std::vector&lt;&ltstd::vector&lt;&lt;std::variant&lt;int,float,double&gt;&gt;&gt;&gt;
         }
 ```

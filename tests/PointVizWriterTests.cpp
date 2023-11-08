@@ -73,3 +73,9 @@ TEST(PointVizWriter,overLoad) {
 
     }
 }
+
+TEST(PointVizWriter,HeaderWrite)
+{
+    pv::PointVizWriter o("testHeader.csv");
+    o.writeHeader(pv::HeaderType::Float,pv::HeaderType::Float,pv::HeaderType::Float);
+}

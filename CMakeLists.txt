@@ -17,6 +17,8 @@ target_sources(${GenDataName} PRIVATE
         src/GenerateTestDataFiles.cpp
         src/PointVizWriter.cpp
         include/PointVizWriter.h
+        include/PointVizTypes.h
+        include/PointVizDataModel.h
 )
 
 
@@ -35,9 +37,11 @@ target_sources(${TestName} PRIVATE
         include/PointVizWriter.h
         src/PointVizReader.cpp
         include/PointVizReader.h
+        include/PointVizTypes.h
+        include/PointVizDataModel.h
 
 )
-target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main )
+target_link_libraries(${TestName} PRIVATE  GTest::gtest_main )
 gtest_discover_tests(${TestName})
 
 add_custom_target(${TestName}CopyTestFiles ALL

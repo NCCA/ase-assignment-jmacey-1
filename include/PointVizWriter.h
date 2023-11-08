@@ -3,12 +3,10 @@
 #include <string_view>
 #include <fstream>
 #include <ostream>
-
 #include <variant>
-
+#include "PointVizTypes.h"
 namespace pv
 {
-    enum class FrameTimeType {INT,FLOAT,DOUBLE};
 
     class PointVizWriter
     {
@@ -23,6 +21,7 @@ namespace pv
         void writeln(std::string_view _str);
         FrameTimeType getFrameType() const;
         bool setFrame(std::variant<int,float,double> _frame);
+
         std::variant<int,float,double> frameNumber() const ;
 
         /* code generate from co-pilot
@@ -39,6 +38,32 @@ namespace pv
             return pvw;
         }
         // end citation.
+
+        template<typename T>
+        void writeHeaderDetail(T _type)
+        {
+            static_assert(std::is_same<T, HeaderType>::value, "Type must be HeaderType");
+            m_stream<<static_cast<char>(_type)<<' ';
+        }
+
+        template<typename T>
+        void writeHeader( T _type)
+        {
+            static_assert(std::is_same<T, HeaderType>::value, "Type must be HeaderType");
+            m_stream<<"Header "<<static_cast<char>(_type)<<'\n';
+        }
+
+        template<typename T, typename... Args>
+        void writeHeader(T first,Args... args)
+        {
+            static_assert(std::is_same<T, HeaderType>::value, "Type must be HeaderType");
+            m_stream<<"Header "<<static_cast<char>(first)<<' ';
+            // fold expression to expand pack
+            (writeHeaderDetail(args), ...);
+            m_stream<<'\n';
+        }
+
+
     private :
         std::ofstream m_stream;
         FrameTimeType m_frameType=FrameTimeType::INT;

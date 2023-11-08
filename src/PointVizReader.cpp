@@ -117,6 +117,8 @@ namespace pv {
 
             }
         }
+        m_dataModel.emplace_back(std::move(currentFrame));
+
         return true;
     }
 

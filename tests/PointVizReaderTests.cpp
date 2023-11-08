@@ -10,8 +10,16 @@ TEST(PointVizReader,ctor)
 
 TEST(PointVizReader,parseSimple)
 {
-    pv::PointVizReader r("files/singleValue10Frames.csv");
-    EXPECT_TRUE(r.isOpen());
-    EXPECT_TRUE(r.parse());
-    r.print();
+    {
+        pv::PointVizReader r("files/singleValue10Frames.csv");
+        EXPECT_TRUE(r.isOpen());
+        EXPECT_TRUE(r.parse());
+        r.print();
+    }
+    {
+        pv::PointVizReader r("files/multipleValue10Frames.csv");
+        EXPECT_TRUE(r.isOpen());
+        EXPECT_TRUE(r.parse());
+        r.print();
+    }
 }

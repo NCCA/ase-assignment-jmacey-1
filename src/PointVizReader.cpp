@@ -73,12 +73,14 @@ namespace pv {
         m_stream.close();
     }
 
-    bool PointVizReader::isOpen() const {
+    bool PointVizReader::isOpen() const
+    {
         return m_stream.is_open();
     }
 
 
-    bool PointVizReader::parse() {
+    bool PointVizReader::parse()
+    {
         std::string str;
         std::unique_ptr<pv::Frame> currentFrame;
         while (!safeGetline(m_stream, str).eof()) {
@@ -101,13 +103,15 @@ namespace pv {
                 {
                     // process header info
                     m_hasFormat = true;
+                    parseHeader(tokens);
+
                 }
                 else
                 {
                     // all other data
                     if (m_hasFormat)
                     {
-                        parseFormattedLine(tokens);
+                        currentFrame->m_frameData.push_back( parseFormattedLine(tokens));
                     }
                     else
                     {
@@ -122,10 +126,32 @@ namespace pv {
         return true;
     }
 
-
-    void PointVizReader::parseFormattedLine(const std::vector<std::string> &_s)
+    std::vector<std::variant<int,float,double>> PointVizReader::parseFormattedLine(const std::vector<std::string> &_s)
     {
+        std::vector<std::variant<int,float,double>> entry;
+        for(size_t i=0; i<_s.size(); ++i)
+        {
+            switch(m_header[i])
+            {
+                case HeaderType::Float :
+                    entry.emplace_back(std::stof(_s[i]));
+                break;
+                case HeaderType::Int :
+                    entry.emplace_back(std::stoi(_s[i]));
 
+                    break;
+                case HeaderType::Char :
+                    entry.emplace_back(std::stoi(_s[i]));
+
+                    break;
+                case HeaderType::Double :
+                    entry.emplace_back(std::stod(_s[i]));
+
+                    break;
+
+            }
+        }
+        return entry;
     }
 
     std::vector<std::variant<int,float,double>> PointVizReader::parseFloatLine(const std::vector<std::string> &_s)
@@ -162,6 +188,32 @@ namespace pv {
             }
         }
     }
+
+
+    void PointVizReader::parseHeader(const std::vector<std::string> &_s)
+    {
+        m_header.clear();
+        for(size_t i=1; i<_s.size(); ++i)
+        {
+            if (_s[i] == "F")
+            {
+                m_header.push_back(HeaderType::Float);
+            }
+            else if(_s[i] == "I")
+            {
+                m_header.push_back(HeaderType::Int);
+            }
+            else if(_s[i] == "D")
+            {
+                m_header.push_back(HeaderType::Double);
+            }
+            else if(_s[i]=="C")
+            {
+                m_header.push_back(HeaderType::Char);
+            }
+        }
+    }
+
 
 } // end namespace
 

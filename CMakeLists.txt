@@ -8,7 +8,7 @@ project(PointViz_build)
 
 set(CMAKE_CXX_STANDARD 17)
 find_package(fmt CONFIG REQUIRED)
-
+add_subdirectory(ParticleTest)
 ## Test Data Gen Programs
 set(GenDataName GenerateTestDataFiles)
 add_executable(${GenDataName} )

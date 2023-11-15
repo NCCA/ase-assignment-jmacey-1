@@ -6,6 +6,7 @@
 #include <fstream>
 #include <memory>
 #include "PointVizDataModel.h"
+#include "PointVizTypes.h"
 namespace pv
 {
     class PointVizReader
@@ -20,8 +21,10 @@ namespace pv
         std::ifstream m_stream;
         std::vector<std::unique_ptr<pv::Frame>> m_dataModel;
         bool m_hasFormat = false;
-        void parseFormattedLine(const std::vector<std::string> &_s);
+        std::vector<std::variant<int,float,double>> parseFormattedLine(const std::vector<std::string> &_s);
         std::vector<std::variant<int,float,double>> parseFloatLine(const std::vector<std::string> &_s);
+        void parseHeader(const std::vector<std::string> &_s);
+        std::vector<HeaderType> m_header;
     };
 }
 

@@ -15,7 +15,6 @@ int main()
       out.setFrame(i);
       e.writePV(out);
       e.update();
-
   }
   return EXIT_SUCCESS;
 }

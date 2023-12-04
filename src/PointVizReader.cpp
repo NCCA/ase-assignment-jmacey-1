@@ -213,6 +213,10 @@ namespace pv {
             }
         }
     }
+    pv::Frame *PointVizReader::getFrame(int _frame)
+    {
+        return m_dataModel[_frame].get();
+    }
 
 
 } // end namespace

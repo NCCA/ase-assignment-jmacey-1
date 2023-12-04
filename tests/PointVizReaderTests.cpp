@@ -23,3 +23,19 @@ TEST(PointVizReader,parseSimple)
         r.print();
     }
 }
+
+
+TEST(PointVizReader,iterate)
+{
+    {
+        pv::PointVizReader r("files/singleValue10Frames.csv");
+        EXPECT_TRUE(r.isOpen());
+        EXPECT_TRUE(r.parse());
+
+        for (auto &f : r)
+        {
+            for(auto d : *f)
+                EXPECT_EQ(d.size() , 3);
+        }
+    }
+}

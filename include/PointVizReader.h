@@ -17,6 +17,11 @@ namespace pv
         bool isOpen() const;
         bool parse();
         void print() const;
+        auto  begin() {return std::begin(m_dataModel);}
+        auto  end() {return std::end(m_dataModel);}
+        auto  cbegin() const {return std::cbegin(m_dataModel);}
+        auto  cend() const {return std::cend(m_dataModel);}
+        pv::Frame *getFrame(int _frame) ;
     private :
         std::ifstream m_stream;
         std::vector<std::unique_ptr<pv::Frame>> m_dataModel;
